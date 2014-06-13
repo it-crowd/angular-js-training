@@ -1,9 +1,8 @@
-function ProductEditCtrl($scope)
+function ProductEditCtrl($scope, ProductDAO)
 {
-    var originalProduct;
     $scope.save = function ()
     {
-        angular.extend(originalProduct, $scope.product);
+        ProductDAO.save($scope.product);
         $scope.product = null;//alternatively: delete$scope.product;
         $scope.$root.$broadcast('ProductSaved');
     };
@@ -15,7 +14,6 @@ function ProductEditCtrl($scope)
 
     $scope.$on('EditProduct', function ($event, product)
     {
-        originalProduct = product;
         $scope.product = angular.extend({}, product);
     });
 
