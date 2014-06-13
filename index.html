@@ -3,8 +3,11 @@
 <head>
     <title>AngularJS training</title>
 </head>
-<body ng-app>
+<body ng-app ng-controller="AppCtrl">
 
+<div>
+    Current user: {{ currentUser.username }} says {{ message }}
+</div>
 <div ng-controller="ProductListCtrl">
     <input ng-model="filter" placeholder="Search"/>
     <table>
@@ -16,9 +19,13 @@
             </td>
         </tr>
     </table>
+
+    <input ng-model="currentUser.username"/>
+    <input ng-model="message"/>
 </div>
 
 <script src="vendor/angular.js"></script>
+<script src="appCtrl.js"></script>
 <script src="productListCtrl.js"></script>
 </body>
 </html>
