@@ -46,4 +46,9 @@ function ProductListCtrl($scope)
         }
         doFilterProducts();
     }, true);
+
+    $scope.$on('UserLoggedOut', function ()
+    {
+        products.length = 0;
+    });
 }

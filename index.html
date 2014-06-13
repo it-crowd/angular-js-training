@@ -3,7 +3,9 @@
 <head>
     <title>AngularJS training</title>
 </head>
-<body ng-app>
+<body ng-app ng-controller="AppCtrl">
+
+<button ng-click="logout()">Logout</button>
 
 <div ng-controller="ProductListCtrl">
     <input ng-model="filter" placeholder="Search"/>
@@ -19,6 +21,7 @@
 </div>
 
 <script src="vendor/angular.js"></script>
+<script src="appCtrl.js"></script>
 <script src="productListCtrl.js"></script>
 </body>
 </html>
