@@ -1,6 +1,11 @@
 function ProductListCtrl($scope)
 {
-    $scope.products = [
+    var products = [
         {id: 1, name: 'TV'}
     ];
+
+    $scope.getProducts = function ()
+    {
+        return products;
+    }
 }
