@@ -8,7 +8,7 @@
 <div ng-controller="ProductListCtrl">
     <input ng-model="filter" placeholder="Search"/>
     <table>
-        <tr ng-repeat="product in getProducts()">
+        <tr ng-repeat="product in filteredProducts">
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
             <td>
