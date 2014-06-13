@@ -7,7 +7,15 @@
 
 <div ng-controller="ProductListCtrl">
     <input ng-model="filter" placeholder="Search"/>
-    {{ getProducts() }}
+    <table>
+        <tr ng-repeat="product in getProducts()">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+                <button type="button" ng-click="remove(product)">Remove</button>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <script src="vendor/angular.js"></script>

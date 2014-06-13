@@ -17,5 +17,13 @@ function ProductListCtrl($scope)
             }
         });
         return results;
-    }
+    };
+
+    $scope.remove = function (product)
+    {
+        var index = products.indexOf(product);
+        if (index > -1) {
+            products.splice(index, 1);
+        }
+    };
 }
