@@ -6,8 +6,10 @@ function ProductListCtrl($scope, ProductDAO)
 
     $scope.remove = function (product)
     {
-        ProductDAO.remove(product);
-        doFilterProducts();
+        ProductDAO.remove(product).then(doFilterProducts).catch(function (error)
+        {
+            alert('Cannot remove product. Reason: ' + error.reason);
+        });
     };
 
     $scope.edit = function (product)
@@ -18,7 +20,10 @@ function ProductListCtrl($scope, ProductDAO)
 
     function doFilterProducts()
     {
-        $scope.filteredProducts = ProductDAO.query($scope.filter);
+        ProductDAO.query($scope.filter).then(function (result)
+        {
+            $scope.filteredProducts = result;
+        });
     }
 
     doFilterProducts();
