@@ -7,12 +7,20 @@ function ProductListCtrl($scope)
 
     $scope.filter = '';
 
+    $scope.visible = true;
+
     $scope.remove = function (product)
     {
         var index = products.indexOf(product);
         if (index > -1) {
             products.splice(index, 1);
         }
+    };
+
+    $scope.edit = function (product)
+    {
+        $scope.$root.$broadcast('EditProduct', product);
+        $scope.visible = false;
     };
 
     function doFilterProducts()
@@ -50,5 +58,15 @@ function ProductListCtrl($scope)
     $scope.$on('UserLoggedOut', function ()
     {
         products.length = 0;
+    });
+
+    $scope.$on('ProductSaved', function ()
+    {
+        $scope.visible = true;
+    });
+
+    $scope.$on('ProductEditCancelled', function ()
+    {
+        $scope.visible = true;
     });
 }
