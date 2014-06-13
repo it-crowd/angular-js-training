@@ -1,68 +1,25 @@
 var module = angular.module('dao', []);
-module.factory('ProductDAO', function ($q, $timeout)
+module.factory('ProductDAO', function ($http)
 {
-    var idSequence = 0;
-    var products = [
-        {id: ++idSequence, name: 'TV'},
-        {id: ++idSequence, name: 'Fridge'}
-    ];
-
 
     return {
         query: function (filter)
         {
-            var deferred = $q.defer();
-            $timeout(function ()
-            {
-                var results = [];
-                angular.forEach(products, function (value)
-                {
-                    if (value.name.match(filter)) {
-                        results.push(value);
-                    }
-                });
-                deferred.resolve(results);
-            }, 1000);
-            return deferred.promise;
+            return $http.get('http://localhost:8000/api/product', {params: {searchQuery: filter}});
         },
         remove: function (product)
         {
-            var deferred = $q.defer();
-            $timeout(function ()
-            {
-                angular.forEach(products, function (value, index)
-                {
-                    if (value.id === product.id) {
-                        products.splice(index, 1);
-                    }
-                });
-                if (Math.random() > .5) {
-                    deferred.resolve();
-                } else {
-                    deferred.reject({reason: 'Random failure'});
-                }
-            }, 1500);
-            return deferred.promise;
+            return $http.delete('http://localhost:8000/api/product/' + product.id);
         }, save: function (product)
         {
-            var deferred = $q.defer();
-            $timeout(function ()
-            {
-                var found = false;
-                angular.forEach(products, function (value)
-                {
-                    if (value.id === product.id) {
-                        angular.extend(value, product);
-                        found = true;
-                    }
-                });
-                if (!found) {
-                    product.id = ++idSequence;
-                    products.push(product);
-                }
-                deferred.resolve();
-            }, 1500);
-            return deferred.promise;
+            var url;
+            if (product.id) {
+                url = 'http://localhost:8000/api/product/' + product.id;
+
+            } else {
+                url = 'http://localhost:8000/api/product';
+            }
+            return $http.post(url, product);
         }
     }
 });
