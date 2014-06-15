@@ -4,6 +4,11 @@ function ProductListCtrl($scope, ProductDAO)
 
     $scope.visible = true;
 
+    $scope.like = function (product)
+    {
+        ProductDAO.like(product).then(doFilterProducts);
+    };
+
     $scope.remove = function (product)
     {
         ProductDAO.remove(product).then(doFilterProducts).catch(function (error)
