@@ -1,25 +1,18 @@
-var module = angular.module('dao', []);
-module.factory('ProductDAO', function ($http)
+var module = angular.module('dao', ['ngResource']);
+module.factory('ProductDAO', function ($resource)
 {
-
+    var ProductResource = $resource('/api/product/:id', {'id': '@id'});
     return {
         query: function (filter)
         {
-            return $http.get('http://localhost:8000/api/product', {params: {searchQuery: filter}});
+            return ProductResource.query({searchQuery: filter}).$promise;
         },
         remove: function (product)
         {
-            return $http.delete('http://localhost:8000/api/product/' + product.id);
+            return new ProductResource(product).$remove();
         }, save: function (product)
         {
-            var url;
-            if (product.id) {
-                url = 'http://localhost:8000/api/product/' + product.id;
-
-            } else {
-                url = 'http://localhost:8000/api/product';
-            }
-            return $http.post(url, product);
+            return new ProductResource(product).$save();
         }
     }
 });

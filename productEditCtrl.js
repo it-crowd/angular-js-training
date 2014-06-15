@@ -2,7 +2,7 @@ function ProductEditCtrl($scope, ProductDAO)
 {
     $scope.save = function ()
     {
-        ProductDAO.save($scope.product).success(function ()
+        ProductDAO.save($scope.product).then(function ()
         {
             $scope.product = null;//alternatively: delete$scope.product;
             $scope.$root.$broadcast('ProductSaved');
