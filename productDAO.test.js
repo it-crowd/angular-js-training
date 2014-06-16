@@ -58,4 +58,29 @@ describe('ProductDAO', function ()
             });
         });
     });
+
+    describe('save', function ()
+    {
+        var $resourceMock, ProductResourceMock, ProductResourceConstructorMock, product;
+        beforeEach(module(function ($provide)
+        {
+            $resourceMock = jasmine.createSpy('$resource');
+            ProductResourceConstructorMock = jasmine.createSpy('new ProductResource');
+            ProductResourceMock = jasmine.createSpyObj('ProductResource', ['$save']);
+            ProductResourceConstructorMock.andReturn(ProductResourceMock);
+            $provide.value('$resource', $resourceMock.andReturn(ProductResourceConstructorMock));
+            product = {id: 1, name: 'abc'};
+        }));
+
+        beforeEach(inject(function (ProductDAO)
+        {
+            ProductDAO.save(product);
+        }));
+
+        it('should invoke new ProductResource(product).$save()', function ()
+        {
+            expect(ProductResourceConstructorMock).toHaveBeenCalledWith(product);
+            expect(ProductResourceMock.$save).toHaveBeenCalled()
+        });
+    });
 });
